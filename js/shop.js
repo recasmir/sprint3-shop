@@ -82,12 +82,12 @@ function buy(id) {
     for(let product of products){
         if(id == product.id){
             cartList.push(product);
-            console.log(cartList);
+            // console.log(cartList);
+            console.log(product.price);
+            calculateSubtotals();
             return
-        };
+        }; 
     };
-    
-    
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
 };
@@ -98,29 +98,49 @@ function cleanCart() {
 };
 
 // Exercise 3
-
 var subtotals = {  
     grocery: 0,  
     beauty: 0,
     clothes: 0
   }
+
+// let subtotalGrocery = 0;  
+// let subtotalBeauty = 0;
+// let subtotalClothes = 0;
+
 function calculateSubtotals() {
+console.log('hola');
+    // for (let category of subtotals){
+    //     subtotals[category].value = 5;
+    //     return
+    // }
+    let category;
     for(let product of cartList){
-        if(product.type == 'grocery'){
-            subtotals.grocery += product.price;
-        }else if(product[type] == 'beauty'){
-            subtotals.beauty ++;
-        }else if(product[type] == 'clothes'){
-            subtotals.clothes ++;
-        };
+        console.log(`the price is ${product.price}`);
+        // subtotals[category].value += item.price;
+        // console.log(subtotals[category].value);
         return
-    };
-    // 1. Create a for loop on the "cartList" array 
-    // 2. Implement inside the loop an if...else or switch...case to add the quantities of each type of product, obtaining the subtotals: subtotalGrocery, subtotalBeauty and subtotalClothes
-    console.log(subtotals.grocery);
+    };  
 };
 
-// console.log(subtotals);
+    // 1. Create a for loop on the "cartList" array 
+    // 2. Implement inside the loop an if...else or switch...case to add the quantities of each type of product, obtaining the subtotals: subtotalGrocery, subtotalBeauty and subtotalClothes
+
+
+//if inside calculateSubtotals
+       // if(product.type == 'grocery'){
+        //     subtotals[grocery].value += product.price;
+        //     // subtotalGrocery += product.price;
+        // }else if(product.type == 'beauty'){
+        //     subtotals.beauty += product.price;
+        //     // subtotalBeauty += product.price;
+        // }else{
+        //     subtotals.clothes += product.price;
+        //     // subtotalClothes += product.price;
+        // };
+        // console.log(item.price);
+        // console.log(subtotals);
+
 
 // Exercise 4
 function calculateTotal() {
