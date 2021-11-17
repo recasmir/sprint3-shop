@@ -124,7 +124,7 @@ function calculateTotal() {
     }
     console.log(total);
     // Calculate total price of the cart either using the "cartList" array
-    
+    generateCart();
 };
 
 // Exercise 5
@@ -139,17 +139,30 @@ let newProperties = {
 // console.log(cart);
 
 function generateCart() {
-    for(let product in products){
-        cart = Object.assign(newProperties,products.product);
-        console.log(cart);
-    }
+    cart = [];
+    
+    for(let product in cartList){
+        if(cart.includes(cartList[product])){
+            console.log('I am inside the if');
+            cart[product].quantity ++;
+        }else{
+        cart.push(cartList[product]);
+        cart[product].quantity=1;
 
+        }
+        
+        
+    }
+    console.log(cart);
+
+    //cart = Object.assign(newProperties,cart[product]);
+    
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
     
 };
 
-generateCart();
+
 // const newProperties = {
 //     laserBlaster: true,
 //     voiceRecognition: true
