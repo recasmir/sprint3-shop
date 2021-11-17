@@ -83,7 +83,7 @@ function buy(id) {
         if(id == product.id){
             cartList.push(product);
             // console.log(cartList);
-            console.log(product.price);
+            console.log(cartList);
             calculateSubtotals();
             return
         }; 
@@ -98,60 +98,71 @@ function cleanCart() {
 };
 
 // Exercise 3
-var subtotals = {  
-    grocery: 0,  
-    beauty: 0,
-    clothes: 0
-  }
-
-// let subtotalGrocery = 0;  
-// let subtotalBeauty = 0;
-// let subtotalClothes = 0;
 
 function calculateSubtotals() {
-console.log('hola');
-    // for (let category of subtotals){
-    //     subtotals[category].value = 5;
-    //     return
-    // }
-    let category;
+    for (let category in subtotal){
+        subtotal[category].value=0;
+    };
     for(let product of cartList){
-        console.log(`the price is ${product.price}`);
-        // subtotals[category].value += item.price;
-        // console.log(subtotals[category].value);
-        return
+        subtotal[product.type].value += product.price;
+        // console.log(product.price);
     };  
+ console.log(subtotal);
+ calculateTotal();
 };
 
     // 1. Create a for loop on the "cartList" array 
     // 2. Implement inside the loop an if...else or switch...case to add the quantities of each type of product, obtaining the subtotals: subtotalGrocery, subtotalBeauty and subtotalClothes
 
 
-//if inside calculateSubtotals
-       // if(product.type == 'grocery'){
-        //     subtotals[grocery].value += product.price;
-        //     // subtotalGrocery += product.price;
-        // }else if(product.type == 'beauty'){
-        //     subtotals.beauty += product.price;
-        //     // subtotalBeauty += product.price;
-        // }else{
-        //     subtotals.clothes += product.price;
-        //     // subtotalClothes += product.price;
-        // };
-        // console.log(item.price);
-        // console.log(subtotals);
-
-
 // Exercise 4
 function calculateTotal() {
+    total=0;
+    for(let category in subtotal){
+        //console.log(subtotal[category].value);
+        total += subtotal[category].value;
+    }
+    console.log(total);
     // Calculate total price of the cart either using the "cartList" array
-}
+    
+};
 
 // Exercise 5
+
+let newProperties = {
+    quantity: 0,
+    subtotal: 0,
+    subtotalWithDiscount: 0
+};
+
+// cart = Object.assign(newProperties,cartList);
+// console.log(cart);
+
 function generateCart() {
+    for(let product in products){
+        cart = Object.assign(newProperties,products.product);
+        console.log(cart);
+    }
+
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
-}
+    
+};
+
+generateCart();
+// const newProperties = {
+//     laserBlaster: true,
+//     voiceRecognition: true
+//   };
+//   const newRobot = Object.assign(newProperties,robot);
+  
+//   console.log(newRobot);
+//   console.log(robot);
+
+
+
+
+
 
 // Exercise 6
 function applyPromotionsCart() {
