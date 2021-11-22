@@ -144,22 +144,7 @@
   </section>
 
   <!-- modal -->
-  <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
 
-  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        ...
-      </div>
-    </div>
-  </div> -->
-  
-
-
-
-
-
-  <!--fin ex modal-->
   <aside>
     <div class="modal fade bd-example-modal-lg" id="cartModal" tabindex="-1" role="dialog"
       aria-labelledby="cartModalTitle" aria-hidden="true">
@@ -191,21 +176,25 @@
                 <p style='color: transparent;'>-</p>
                 <div id="shoppingListBtn"></div>
               </div>
- 
-              <div class="row">
+            </div>
+            <div class="row">
                 <div class="col-12">
-                  <h3 class="text-center bill px-5">Select Something</h3>
+                  <p>Total: <span id="shoppingListTotal"></span></p>
+                  <p>Total with discount: <span id="shoppingListTotalWithDiscount"></span></p>
                 </div>
-              </div>
-              <div class="text-center"> 
+            </div>
+            <div class="row">
+              <div class="col-12 text-center"> 
                 <a href="checkout.html" class="btn btn-primary m-3">Checkout</a>
               </div>
             </div>
+          </div>
             <!-- listing items ends -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="emptyShoppingList()">Close</button>
+            </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="emptyShoppingList()">Close</button>
-          </div>
+
         </div>
       </div>
     </div>

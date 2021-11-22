@@ -78,23 +78,23 @@ var subtotal = {
 var total = 0;
 
 // Exercise 1
-function buy(id) {
-    for(let product of products){
-        if(id == product.id){
-            cartList.push(product);
-            // console.log(cartList);
-            console.log(cartList);
-            calculateSubtotals();
-            return
-        }; 
-    };
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cartList array
-};
+// function buy(id) {
+//     for(let product of products){
+//         if(id == product.id){
+//             cartList.push(product);
+//             // console.log(cartList);
+//             console.log(cartList);
+//             calculateSubtotals();
+//             return
+//         }; 
+//     };
+//     // 1. Loop for to the array products to get the item to add to cart
+//     // 2. Add found product to the cartList array
+// };
 
 // Exercise 2
 function cleanCart() {
-    cartList = [];
+    cart = []; //cartList =[] before refactoring
 };
 
 // Exercise 3
@@ -103,12 +103,13 @@ function calculateSubtotals() {
     for (let category in subtotal){
         subtotal[category].value=0;
     };
-    for(let product of cartList){
-        subtotal[product.type].value += product.price;
+    for(let product of cart){
+        subtotal[product.type].value += product.price*product.quantity;
         // console.log(product.price);
     };  
  console.log(subtotal);
  calculateTotal();
+ calculateTotalWithDiscount();
 };
 
     // 1. Create a for loop on the "cartList" array 
@@ -123,14 +124,18 @@ function calculateTotal() {
         total += subtotal[category].value;
     }
     console.log(total);
+    shoppingListTotal.innerHTML=`\$${total}`;
+    
     // Calculate total price of the cart either using the "cartList" array
-    generateCart();
+    //generateCart();
+    addToCart();
 };
 
 // Exercise 5
 
 
 
+// 1st option of generateCart()
 // function generateCart() {
 //     cart = [];
 //     for(let product in cartList){
@@ -149,25 +154,26 @@ function calculateTotal() {
 //     console.log(cart);
 // };
 
-function generateCart() {
-    cart = [];
-    for(let product in cartList){
-        if(cart.includes(cartList[product])){
-            cartList[product].quantity ++;
-            cartList[product].subtotal=cartList[product].price*cartList[product].quantity;
-            applyPromotionsCart();
-           }else{
-            cart.push(cartList[product]);
-            cart[cart.length-1].quantity=1;
-            cart[cart.length-1].subtotal=cart[cart.length-1].price;
-            cart[cart.length-1].subtotalWithDiscount=0;
+// 2nd option of generateCart(). That's the one used before refactoring
+// function generateCart() {
+//     cart = [];
+//     for(let product in cartList){
+//         if(cart.includes(cartList[product])){
+//             cartList[product].quantity ++;
+//             cartList[product].subtotal=cartList[product].price*cartList[product].quantity;
+//             applyPromotionsCart();
+//            }else{
+//             cart.push(cartList[product]);
+//             cart[cart.length-1].quantity=1;
+//             cart[cart.length-1].subtotal=cart[cart.length-1].price;
+//             cart[cart.length-1].subtotalWithDiscount=0;
             
-        } 
+//         } 
         
-    }
-    console.log(cart);
+//     }
+//     console.log(cart);
     
-};
+// };
     
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.   
@@ -203,32 +209,32 @@ function applyPromotionsCart() {
 //     // 2. Add found product to the cart array or update its quantity in case it has been added previously.
 // }
 
+//function after refactoring - we've joined buy() & generateCart()
 function addToCart(id) {
     for(let product of products){
         if(id == product.id){
-            if(cart.includes(cart[product.id])){
-                console.log('im inside the includes if');
-                [product].quantity ++;
-                [product].subtotal=[product].price*[product].quantity;
+            if(cart.includes(product)){
+                product.quantity ++;
+                product.subtotal=product.price*product.quantity;
                 applyPromotionsCart();
                }else{
                 cart.push(product);
                 cart[cart.length-1].quantity=1;
                 cart[cart.length-1].subtotal=cart[cart.length-1].price;
-                cart[cart.length-1].subtotalWithDiscount=0;
+                cart[cart.length-1].subtotalWithDiscount=cart[cart.length-1].price;
                 
             } 
             console.log(cart);
-            //calculateSubtotals();
+            calculateSubtotals();
            
         }
     }
 
 };
 
-// function buy(id){
-//     addToCart(id);
-// };
+function buy(id){
+    addToCart(id);
+};
 
 // Exercise 9
 function removeFromCart(id) {
@@ -260,9 +266,11 @@ let shoppingList = document.getElementById('shoppingList');
 let shoppingListQuantity = document.getElementById('shoppingListQuantity');
 let shoppingListSubtotal = document.getElementById('shoppingListSubtotal');
 let shoppingListBtn = document.getElementById('shoppingListBtn');
+let shoppingListTotal = document.getElementById('shoppingListTotal');
 
 function printCart() {
-    generateCart();
+    
+    addToCart(); //generateCart() before refactoring
     for(let product of cart){
         let listItem = document.createElement('li');
         listItem.innerHTML = product.name;
@@ -273,24 +281,38 @@ function printCart() {
         shoppingListQuantity.appendChild(listItemQuantity);
 
         let listItemSubtotal = document.createElement('li');
-        listItemSubtotal.innerHTML = product.subtotal;
+        listItemSubtotal.innerHTML = product.subtotalWithDiscount;
         shoppingListSubtotal.appendChild(listItemSubtotal);
 
         let removeItem = document.createElement('button');
         removeItem.style.marginBottom = '10px';
         removeItem.innerHTML = 'minus';
         shoppingListBtn.appendChild(removeItem);
-        //removeItem.setAttribute('click', removeFromCart(product.id));
+        //removeItem.stopPropagation();
         removeItem.addEventListener('click', removeFromCart(product.id));
+
         // removeItem.onclick = removeFromCart(product.id);
+        //removeItem.setAttribute('click', removeFromCart(product.id));
     }
+
 };
+
+var totalWithDiscount=0;
+function calculateTotalWithDiscount(){
+    for(let product in cart){
+        totalWithDiscount += product.subtotalWithDiscount;
+    }
+    document.getElementById('shoppingListTotalWithDiscount').innerHTML=`\$${totalWithDiscount}`;
+
+}
 
 function emptyShoppingList(){
     shoppingList.innerHTML='';
     shoppingListQuantity.innerHTML='';
     shoppingListSubtotal.innerHTML='';
     shoppingListBtn.innerHTML='';
+    shoppingListTotal.innerHTML='';
+    shoppingListTotalWithDiscount.innerHTML='';
 };
 
 // Fill the shopping cart modal manipulating the shopping cart dom
