@@ -277,9 +277,11 @@ function printCart() {
         shoppingListSubtotal.appendChild(listItemSubtotal);
 
         let removeItem = document.createElement('button');
+        removeItem.style.marginBottom = '10px';
         removeItem.innerHTML = 'minus';
         shoppingListBtn.appendChild(removeItem);
-        removeItem.setAttribute('click', removeFromCart(product.id));
+        //removeItem.setAttribute('click', removeFromCart(product.id));
+        removeItem.addEventListener('click', removeFromCart(product.id));
         // removeItem.onclick = removeFromCart(product.id);
     }
 };
